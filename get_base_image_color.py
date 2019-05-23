@@ -1,13 +1,17 @@
 from PIL import Image
-import random
+import random, sys
 
-im = Image.open('d.png') # Can be many different formats.
+img_name = sys.argv[1]
+
+im = Image.open(img_name) # Can be many different formats.
 pix = im.load()
+
 h,w = im.size  # Get the width and hight of the image for iterating over
 numpix = h*w
-print(pix[h-10,w-1])
+
 numblack = (0,0,0)
 nums = {}
+
 for i in range(h):
         for j in range(w):
                 nums[pix[i,j]] = 1 if pix[i,j] not in nums else nums[pix[i,j]] + 1
@@ -23,5 +27,7 @@ col = tuple(int(ti/3) for ti in col)
 for i in range(h):
         for j in range(w):
                 pix[i,j] = col
+
+print("Base Color: "+str(col))
 
 im.save('base_color.png')
